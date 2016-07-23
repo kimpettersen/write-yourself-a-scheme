@@ -3,6 +3,7 @@ import System.Environment
 import Text.ParserCombinators.Parsec hiding (spaces)
 import System.Environment
 import Control.Monad
+import Numeric (readHex)
 
 
 main :: IO ()
@@ -57,9 +58,16 @@ parseAtom = do
         "#f" -> Bool False
         _    -> Atom atom
 
+isHex = do
+    char '#'
+    char 'x'
+    hex <- many1 hexDigit
+    let ((num,_):_) = readHex $ hex !! 0
+    return num
+
 parseNumber :: Parser LispVal
 parseNumber = do
-    nums <- many1 digit
+    nums <- isHex <|> many1 digit
     return $ Number (read nums)
 
 --parseNumber = many1 digit >>= \nums -> return $ Number (read nums)

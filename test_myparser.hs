@@ -23,5 +23,5 @@ main = hspec $ do
             readExpr "\"eof\reof\"" `shouldBe` "Found Value String \"eof\\reof\""
         it "Escaped \\t" $ do
             readExpr "\"tab\ttab\"" `shouldBe` "Found Value String \"tab\\ttab\""
-        it "Binary #o10" $ do
-            readExpr "#o10" `shouldBe` "Found Value Number "
+        it "Hex #xa" $ do
+            readExpr "#xa" `shouldBe` "Found Value Number \"#xa\""
